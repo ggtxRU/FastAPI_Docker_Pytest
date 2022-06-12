@@ -18,15 +18,15 @@ TORTOISE_ORM = {
     },
 }
 
-def init_db(app:FastAPI) -> None:
+
+def init_db(app: FastAPI) -> None:
     register_tortoise(
         app,
-	db_url = os.environ.get("DATABASE_URL"),
-	modules={"models":["app.models.tortoise"]},
-	generate_schemas=False,
-	add_exception_handlers=True,
+        db_url=os.environ.get("DATABASE_URL"),
+        modules={"models": ["app.models.tortoise"]},
+        generate_schemas=False,
+        add_exception_handlers=True,
     )
-
 
 
 async def generate_schema() -> None:
@@ -36,10 +36,9 @@ async def generate_schema() -> None:
         db_url=os.environ.get("DATABASE_URL"),
         modules={"models": ["models.tortoise"]},
     )
-    log.info("Generating database schema via Tortoise...")
+    log.info("Generating schemas for PSQL...")
     await Tortoise.generate_schemas()
     await Tortoise.close_connections()
-
 
 
 if __name__ == "__main__":
